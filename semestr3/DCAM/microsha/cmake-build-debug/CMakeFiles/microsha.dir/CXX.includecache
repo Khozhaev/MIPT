@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/cristo/MIPT/MIPT_prog/MIPT/semestr3/DCAM/microsha/main.cpp
+iostream
+-
+string
+-
+vector
+-
+optional
+-
+algorithm
+-
+sstream
+-
+strstream
+-
+sys/types.h
+-
+sys/wait.h
+-
+sys/stat.h
+-
+fcntl.h
+-
+unistd.h
+-
+cstring
+-
+memory
+-
+fstream
+-
+dirent.h
+-
+

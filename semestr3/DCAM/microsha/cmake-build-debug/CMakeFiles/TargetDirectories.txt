@@ -1,0 +1,3 @@
+/home/cristo/MIPT/MIPT_prog/MIPT/semestr3/DCAM/microsha/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/cristo/MIPT/MIPT_prog/MIPT/semestr3/DCAM/microsha/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/cristo/MIPT/MIPT_prog/MIPT/semestr3/DCAM/microsha/cmake-build-debug/CMakeFiles/microsha.dir
