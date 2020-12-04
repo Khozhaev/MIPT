@@ -34,12 +34,12 @@ timeval& operator-=(timeval& lhs, const timeval& rhs){
 
 class Timer{
     bool isLog_;
-    __rusage_who who_;
+    int who_;
     rusage start_;
     timeval timerStart_;
     struct timezone zone_;
 public:
-    Timer(bool isLog, __rusage_who type = RUSAGE_CHILDREN)
+    Timer(bool isLog, int = RUSAGE_CHILDREN)
         : isLog_(isLog),
         who_(type),
         zone_({0, 0})
