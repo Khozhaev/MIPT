@@ -34,15 +34,15 @@ timeval& operator-=(timeval& lhs, const timeval& rhs){
 
 class Timer{
     bool isLog_;
-    __rusage_who who_;
+    int who_;
     rusage start_;
     timeval timerStart_;
     struct timezone zone_;
 public:
-    Timer(bool isLog, __rusage_who type = RUSAGE_CHILDREN)
-        : isLog_(isLog),
-        who_(type),
-        zone_({0, 0})
+    Timer(bool isLog, int type = RUSAGE_CHILDREN)
+    : isLog_(isLog),
+    who_(type),
+    zone_({0, 0})
     {
         gettimeofday(&timerStart_, &zone_);
         getrusage(type, &start_);
@@ -56,16 +56,16 @@ public:
             gettimeofday(&timerEnd_, &zone_);
             timerEnd_ -= timerStart_;
             std::cerr << "real         " << (timerEnd_.tv_sec) / 60 << "m" << (timerEnd_.tv_sec)%60 << "," << std::setw(3)
-                << std::setfill('0') << std::left << timerEnd_.tv_usec / 1000 << "s" << std::endl;
+                      << std::setfill('0') << std::left << timerEnd_.tv_usec / 1000 << "s" << std::endl;
         }
         rusage end_;
         getrusage(who_, &end_);
         end_.ru_utime -= start_.ru_utime;
         std::cerr << "user         " << (end_.ru_utime.tv_sec) / 60 << "m" << (end_.ru_utime.tv_sec)%60 << "," << std::setw(3)
-            << std::setfill('0') << std::left << end_.ru_utime.tv_usec / 1000 << "s" << std::endl;
+                  << std::setfill('0') << std::left << end_.ru_utime.tv_usec / 1000 << "s" << std::endl;
         end_.ru_stime -= start_.ru_stime;
         std::cerr << "sys          " << (end_.ru_stime.tv_sec) / 60 << "m" << (end_.ru_stime.tv_sec)%60 << "," << std::setw(3)
-            << std::setfill('0') << std::left << end_.ru_stime.tv_usec / 1000 << "s" << std::endl;
+                  << std::setfill('0') << std::left << end_.ru_stime.tv_usec / 1000 << "s" << std::endl;
     }
 };
 void sig_handler(int sig) {
@@ -75,10 +75,10 @@ void sig_handler(int sig) {
 class Matcher{
     std::string pattern_;
     bool Matching(
-        std::string::const_iterator patternBegin,
-        std::string::const_iterator patternEnd,
-        std::string::const_iterator candidateBegin,
-        std::string::const_iterator candidateEnd) const
+            std::string::const_iterator patternBegin,
+            std::string::const_iterator patternEnd,
+            std::string::const_iterator candidateBegin,
+            std::string::const_iterator candidateEnd) const
     {
         if(patternBegin == patternEnd) {
             return candidateBegin == candidateEnd;
@@ -98,11 +98,11 @@ class Matcher{
             return Matching(patternBegin + 1, patternEnd, candidateBegin, candidateEnd);
         }
         return (*patternBegin == *candidateBegin)
-                && (Matching(patternBegin + 1,patternEnd, candidateBegin + 1, candidateEnd));
+               && (Matching(patternBegin + 1,patternEnd, candidateBegin + 1, candidateEnd));
     }
 public:
     Matcher(std::string pattern)
-        :pattern_(std::move(pattern))
+            :pattern_(std::move(pattern))
     {}
     bool operator()(const std::string& candidate) const{
         return Matching(pattern_.begin(), pattern_.end(), candidate.begin(), candidate.end());
@@ -138,9 +138,9 @@ std::string getCurrDir(){
 
 std::string getCurrUserName(){
     return helpSysGetter([](char *buff, size_t buffSz){
-                                return !getlogin_r(buff, buffSz);
-                            }
-                        );
+                             return !getlogin_r(buff, buffSz);
+                         }
+    );
 }
 
 
@@ -234,7 +234,7 @@ public:
     Command& operator=(Command&&) = delete;
 
     Command(std::string name):
-                commandName_(std::move(name)), args_(1, new char[name.size() + 1]){
+            commandName_(std::move(name)), args_(1, new char[name.size() + 1]){
         memcpy(args_[0], name.data(), name.size());
         args_[0][name.size()] = 0;
     }
@@ -438,7 +438,7 @@ private:
         }
         std::vector<std::unique_ptr<Command>> res(line.commands.size());
 #ifdef DEBUG
-    CommandLingDebugMod(line);
+        CommandLingDebugMod(line);
 #endif
         for(size_t i = 0; i < res.size(); ++i){
             res[i] = std::make_unique<Command>(line.commands[i].first);
